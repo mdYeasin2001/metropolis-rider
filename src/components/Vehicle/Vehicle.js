@@ -8,10 +8,10 @@ const Vehicle = ({ vehicle }) => {
         history.push('/destination')
     }
     return (
-        <div class="col">
-            <div onClick={handleOnClick} class="card">
-                <img src={img} class="card-img-top" alt="vehicle" />
-                <h5 class="card-title text-center">{nameVehicle.toUpperCase()}</h5>
+        <div className="col">
+            <div onClick={handleOnClick} className="card">
+                <img src={img} className="card-img-top" alt="vehicle" />
+                <h5 className="card-title text-center">{nameVehicle.toUpperCase()}</h5>
             </div>
         </div>
     );
