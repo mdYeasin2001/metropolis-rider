@@ -20,9 +20,13 @@ const Login = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const [newUser, setNewUser] = useState(false);
     const { register, handleSubmit, watch, errors } = useForm();
-    
+
+    // authentication provider
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+
     const onSubmit = data => {
-        if (newUser && data.email && data.password) {
+        console.log(data);
+        if (newUser && data.name && data.email && data.password) {
             firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
                 .then((userCredential) => {
                     var user = userCredential.user;
@@ -36,45 +40,74 @@ const Login = () => {
             firebase.auth().signInWithEmailAndPassword(data.email, data.password)
                 .then((userCredential) => {
                     // Signed in
-                    var {displayName, email} = userCredential.user;
-                    const userData = {name: displayName, email}
+                    var { displayName, email } = userCredential.user;
+                    const userData = { name: displayName, email }
                     setLoggedInUser(userData);
                     history.replace(from);
-                    
+
                 })
                 .catch((error) => {
                     var errorCode = error.code;
                     var errorMessage = error.message;
-                    setLoggedInUser({errorMessage})
+                    setLoggedInUser({ errorMessage })
                 });
         }
     };
 
     // console.log(watch("example"));
+
+    const handleGoogleSignIn = () => {
+        firebase.auth()
+            .signInWithPopup(googleProvider)
+            .then((result) => {
+                /** @type {firebase.auth.OAuthCredential} */
+                var credential = result.credential;
+
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                var token = credential.accessToken;
+                // The signed-in user info.
+                const { displayName, email } = result.user;
+                const userData = { name: displayName, email }
+                setLoggedInUser(userData);
+                history.replace(from);
+
+            }).catch((error) => {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // The email of the user's account used.
+                var email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                var credential = error.credential;
+                // ...
+                setLoggedInUser({errorMessage});
+            });
+    }
+
     return (
-        <div className="row pt-5">
+        <div className="row py-5">
             <div className="col-md-4 offset-md-4">
-                <div className="card p-3">
+                <div className="card p-3 cursor-pointer">
                     {newUser ? <h3>Create an account</h3> : <h3>Login</h3>}
                     {loggedInUser.errorMessage && <p className="text-danger">{loggedInUser.errorMessage}</p>}
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         {newUser &&
                             <>
-                                <input name="name" className="form-control mb-3" type="text" placeholder="Name" ref={register({ required: true })} required />
+                                <input name="name" className="form-control mb-3" type="text" placeholder="Name" ref={register({ required: true })} />
                                 {errors.name && <span className="text-danger">Name is required</span>}
                             </>
                         }
 
-                        <input name="email" className="form-control mb-3" type="email" placeholder="Email" ref={register({ required: true })} required />
+                        <input name="email" className="form-control mb-3" type="email" placeholder="Email" ref={register({ required: true })} />
                         {errors.email && <span className="text-danger">Email is required</span>}
 
-                        <input name="password" className="form-control mb-3" type="password" placeholder="Password" ref={register({ pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i })} required />
+                        <input name="password" className="form-control mb-3" type="password" placeholder="Password" ref={register({ pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i })} />
                         {errors.password && <span className="text-danger">Minimum eight characters, at least one uppercase letter, one lowercase letter and one number</span>}
 
                         {newUser &&
                             <>
-                                <input name="confirmPassword" className="form-control mb-3" type="password" placeholder="Confirm Password" ref={register({ required: true })} required />
+                                <input name="confirmPassword" className="form-control mb-3" type="password" placeholder="Confirm Password" ref={register({ required: true })} />
                                 {errors.confirmPassword && <span className="text-danger">Password Not matched</span>}
                             </>
                         }
@@ -83,10 +116,10 @@ const Login = () => {
                     </form>
                     {newUser ?
                         <span className="d-block pt-2 text-center">Already have an account?<Link onClick={() => setNewUser(!newUser)} to="/login">Login</Link></span> :
-                        <span className="d-block pt-2 text-center">Don't have an account?<Link onClick={() => setNewUser(!newUser)} to="/register">Create an account</Link></span>
+                        <span className="d-block pt-2 text-center">Don't have an account?<Link onClick={() => setNewUser(!newUser)} to="/login">Create an account</Link></span>
                     }
                     <p className="text-center py-4 lead">or</p>
-                    <div className="btn btn-light"><FcGoogle className="fs-2 ms-auto" />Continue with google</div>
+                    <button onClick={handleGoogleSignIn} className="btn btn-light"><FcGoogle className="fs-2 ms-auto" />Continue with google</button>
                 </div>
             </div>
         </div>

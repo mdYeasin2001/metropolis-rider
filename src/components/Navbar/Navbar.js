@@ -2,12 +2,21 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import { FaUserCircle } from 'react-icons/fa';
-
+import firebase from "firebase/app";
+import "firebase/auth";
 
 const Navbar = () => {
-    const [loggedInUser] = useContext(UserContext);
+    const [loggedInUser, setLoggedInUser] = useContext(UserContext);
+    const handleLogout = () => {
+        firebase.auth().signOut().then(() => {
+            // Sign-out successful.
+            setLoggedInUser({})
+          }).catch((error) => {
+            // An error happened.
+          });          
+    }
     return (
-        <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <nav className="navbar navbar-expand-lg navbar-light bg-transparent">
             <div className="container">
                 <Link className="navbar-brand fs-3 fw-bold" to="/">Metropolis <span>Rider</span></Link>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,7 +31,7 @@ const Navbar = () => {
                         {loggedInUser.email ?
                             <>
                                 <Link className="nav-link" to="/contact"><FaUserCircle className="fs-5 mx-2"/>{loggedInUser.email}</Link>
-                                <Link to="/login" className="btn btn-danger">Logout</Link>
+                                <Link onClick={handleLogout} to="/" className="btn btn-danger">Logout</Link>
                             </> :
                             <Link to="/login" className="btn btn-danger">Login</Link>
                         }

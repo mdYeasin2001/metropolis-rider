@@ -12,30 +12,32 @@ import { createContext, useState } from 'react';
 import Destination from './components/Destination/Destination';
 import PrivetRoute from './components/PrivetRoute/PrivetRoute';
 
+//context api
 export const UserContext = createContext();
+export const VehicleTypeContext = createContext();
 
 function App() {
   const [loggedInUser, setLoggedInUser] = useState({});
-  console.log(loggedInUser);
+  const [selectedVehicles, setSelectedVehicles] = useState("Bike");
+  console.log(selectedVehicles);
   return (
     <UserContext.Provider value={[loggedInUser, setLoggedInUser]} >
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <Login />
-          </Route>
-          <PrivetRoute path="/destination">
-            <Destination/>
-          </PrivetRoute>
-        </Switch>
-      </Router>
+      <VehicleTypeContext.Provider value={[selectedVehicles, setSelectedVehicles]}>
+        <Router>
+          <Navbar />
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <PrivetRoute path="/destination">
+              <Destination />
+            </PrivetRoute>
+          </Switch>
+        </Router>
+      </VehicleTypeContext.Provider>
     </UserContext.Provider>
   );
 }
