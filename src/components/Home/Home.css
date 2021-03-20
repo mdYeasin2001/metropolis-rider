@@ -8,3 +8,29 @@
 .vehicle-container{
     padding-top: 10rem;
 }
+
+
+@media (max-width: 991px){
+    .home-area{
+        padding-top: 10rem;
+        margin-top: -17rem;
+        height: 145vh
+    }
+}
+@media (max-width: 767px){
+    .home-area{
+        height: 200vh;
+        margin-top: -17rem;
+    }
+}
+@media (max-width: 575px){
+    .home-area{
+        height: 400vh;
+        margin-top: -17rem;
+    }
+}
+@media (max-width: 320px){
+    .home-area{
+        height: 355vh;
+    }
+}

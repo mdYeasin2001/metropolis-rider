@@ -11,7 +11,7 @@ const Home = () => {
     return (
         <div className="home-area">
             <div className="container vehicle-container">
-                <div className="row row-cols-1 row-cols-md-4 g-5">
+                <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-5">
                     {vehicles.map(vehicle => <Vehicle vehicle={vehicle} key={vehicle.id} />)}
                 </div>
             </div>

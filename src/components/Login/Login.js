@@ -20,26 +20,31 @@ const Login = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
     const [newUser, setNewUser] = useState(false);
     const { register, handleSubmit, watch, errors } = useForm();
+    
+
 
     // authentication provider
     const googleProvider = new firebase.auth.GoogleAuthProvider();
 
     const onSubmit = data => {
-        console.log(data);
-        if (newUser && data.name && data.email && data.password) {
+        // console.log(data);
+        if (newUser && data.name && data.email && data.password && data.password === data.confirmPassword) {
             firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
                 .then((userCredential) => {
-                    var user = userCredential.user;
+                    // Create user with email and password
+                    const user = userCredential.user;
+                    setLoggedInUser({errorMessage: ''})
                 })
                 .catch((error) => {
-                    var errorCode = error.code;
+                    // failed to create user with email and password
                     var errorMessage = error.message;
+                    setLoggedInUser({errorMessage})
                 });
         }
         if (!newUser && data.email && data.password) {
             firebase.auth().signInWithEmailAndPassword(data.email, data.password)
                 .then((userCredential) => {
-                    // Signed in
+                    // Signed in with email and password
                     var { displayName, email } = userCredential.user;
                     const userData = { name: displayName, email }
                     setLoggedInUser(userData);
@@ -47,40 +52,28 @@ const Login = () => {
 
                 })
                 .catch((error) => {
-                    var errorCode = error.code;
+                    // failed to sign in with email and password
                     var errorMessage = error.message;
                     setLoggedInUser({ errorMessage })
                 });
         }
     };
-
-    // console.log(watch("example"));
+    console.log(watch().password, watch().confirmPassword);
 
     const handleGoogleSignIn = () => {
         firebase.auth()
             .signInWithPopup(googleProvider)
             .then((result) => {
-                /** @type {firebase.auth.OAuthCredential} */
-                var credential = result.credential;
-
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                var token = credential.accessToken;
-                // The signed-in user info.
+                // signed in with google
                 const { displayName, email } = result.user;
                 const userData = { name: displayName, email }
                 setLoggedInUser(userData);
                 history.replace(from);
 
             }).catch((error) => {
-                // Handle Errors here.
-                var errorCode = error.code;
+                // failed to sign in with google
                 var errorMessage = error.message;
-                // The email of the user's account used.
-                var email = error.email;
-                // The firebase.auth.AuthCredential type that was used.
-                var credential = error.credential;
-                // ...
-                setLoggedInUser({errorMessage});
+                setLoggedInUser({ errorMessage });
             });
     }
 
@@ -93,26 +86,30 @@ const Login = () => {
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         {newUser &&
-                            <>
-                                <input name="name" className="form-control mb-3" type="text" placeholder="Name" ref={register({ required: true })} />
+                            <div className="mb-3">
+                                <input name="name" className="form-control" type="text" placeholder="Name" ref={register({ required: true })} />
                                 {errors.name && <span className="text-danger">Name is required</span>}
-                            </>
+                            </div>
                         }
 
-                        <input name="email" className="form-control mb-3" type="email" placeholder="Email" ref={register({ required: true })} />
-                        {errors.email && <span className="text-danger">Email is required</span>}
+                        <div className="mb-3">
+                            <input name="email" className="form-control" type="email" placeholder="Email" ref={register({ required: true })} />
+                            {errors.email && <span className="text-danger">Email is required</span>}
+                        </div>
 
-                        <input name="password" className="form-control mb-3" type="password" placeholder="Password" ref={register({ pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i })} />
-                        {errors.password && <span className="text-danger">Minimum eight characters, at least one uppercase letter, one lowercase letter and one number</span>}
+                        <div className="mb-3">
+                            <input name="password" className="form-control" type="password" placeholder="Password" ref={register({ pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i })} />
+                            {errors.password && <span className="text-danger">Minimum eight characters, at least one uppercase letter, one lowercase letter and one number</span>}
+                        </div>
 
                         {newUser &&
-                            <>
-                                <input name="confirmPassword" className="form-control mb-3" type="password" placeholder="Confirm Password" ref={register({ required: true })} />
-                                {errors.confirmPassword && <span className="text-danger">Password Not matched</span>}
-                            </>
+                            <div className="mb-3">
+                                <input name="confirmPassword" className="form-control" type="password" placeholder="Confirm Password" ref={register({ required: true })} />
+                                {watch().password === watch().confirmPassword || <span className="text-danger">Password Not matched</span>}
+                            </div>
                         }
 
-                        <input className="btn btn-primary d-block w-100" type="submit" value={newUser ? "Create an account" : "Login"} />
+                        <input className="btn btn-secondary d-block w-100" type="submit" value={newUser ? "Create an account" : "Login"} />
                     </form>
                     {newUser ?
                         <span className="d-block pt-2 text-center">Already have an account?<Link onClick={() => setNewUser(!newUser)} to="/login">Login</Link></span> :
