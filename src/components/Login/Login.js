@@ -134,7 +134,7 @@ const Login = () => {
                             <input className="btn btn-secondary btn-round d-block w-100" type="submit" value={newUser ? "Create an account" : "Login"} />
                         </form>
 
-                        <span className="d-block pt-2 text-center">{newUser ? "Already have an account?" : "Don't have an account?"}<Link onClick={() => setNewUser(!newUser)} >{newUser ? "Login" : "Create an account"}</Link></span>
+                        <span className="d-block pt-2 text-center">{newUser ? "Already have an account?" : "Don't have an account?"}<span style={{color: "blue", cursor: "pointer", textDecoration: "underline"}} onClick={() => setNewUser(!newUser)} >{newUser ? "Login" : "Create an account"}</span></span>
 
                         <p className="text-center py-4 lead">or</p>
                         <button onClick={handleGoogleSignIn} className="btn btn-light btn-round"><FcGoogle className="fs-2 ms-auto" />Continue with google</button>
