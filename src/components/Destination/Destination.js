@@ -1,15 +1,17 @@
 import React from 'react';
+import Map from '../Map/Map';
 import SearchForm from '../SearchForm/SearchForm';
 
 const Destination = () => {
 
     return (
         <div className="container">
-            <div className="row py-5">
-                <SearchForm/>
-                <div className="col-md-8" style={{height: '200px'}}>
-                    <img className="img-responsive w-100" src="../../../../attachment/urban-riders-main/images/Map.png" alt=""/>
-                    <h1 className="display-1">This is Map Area</h1>
+            <div className="row row-cols-1 row-cols-lg-2 g-5">
+                <div className="col col-lg-4">
+                    <SearchForm />
+                </div>
+                <div className="col col-lg-8">
+                    <Map />
                 </div>
             </div>
         </div>

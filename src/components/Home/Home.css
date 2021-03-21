@@ -1,36 +1,28 @@
-.home-area{
-    background: url('https://img.freepik.com/free-photo/empty-asphalt-road-towards-modern-city_9083-2791.jpg?size=626&ext=jpg&ga=GA1.2.293448777.1615994940') no-repeat;
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
-    margin-top: -4.3rem;
+.home-area {
+  background: url("https://img.freepik.com/free-photo/empty-asphalt-road-towards-modern-city_9083-2791.jpg?size=626&ext=jpg&ga=GA1.2.293448777.1615994940")
+    no-repeat;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  margin-top: -4.3rem;
 }
-.vehicle-container{
-    padding-top: 10rem;
+.vehicle-container {
+  padding-top: 10rem;
 }
-
-
-@media (max-width: 991px){
-    .home-area{
-        padding-top: 10rem;
-        margin-top: -17rem;
-        height: 145vh
-    }
+@media (max-width: 991px) {
+  .home-area {
+    padding-top: 15rem;
+    margin-top: -20rem;
+    height: 170vh;
+  }
 }
-@media (max-width: 767px){
-    .home-area{
-        height: 200vh;
-        margin-top: -17rem;
-    }
+@media (max-width: 767px) {
+  .home-area {
+    height: 230vh;
+  }
 }
-@media (max-width: 575px){
-    .home-area{
-        height: 400vh;
-        margin-top: -17rem;
-    }
-}
-@media (max-width: 320px){
-    .home-area{
-        height: 355vh;
-    }
+@media (max-width: 575px) {
+  .home-area {
+    height: 630vh;
+  }
 }

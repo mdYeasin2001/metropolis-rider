@@ -4,6 +4,7 @@ import { UserContext } from '../../App';
 import { FaUserCircle } from 'react-icons/fa';
 import firebase from "firebase/app";
 import "firebase/auth";
+import './Navbar.css';
 
 const Navbar = () => {
     const [loggedInUser, setLoggedInUser] = useContext(UserContext);
@@ -11,9 +12,9 @@ const Navbar = () => {
         firebase.auth().signOut().then(() => {
             // Sign-out successful.
             setLoggedInUser({})
-          }).catch((error) => {
+        }).catch((error) => {
             // An error happened.
-          });          
+        });
     }
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-transparent">
@@ -30,10 +31,10 @@ const Navbar = () => {
                         <Link className="nav-link" to="/contact">Contact</Link>
                         {loggedInUser.email ?
                             <>
-                                <Link className="nav-link" to="/contact"><FaUserCircle className="fs-5 mx-2"/>{loggedInUser.email}</Link>
-                                <Link onClick={handleLogout} to="/" className="btn btn-danger">Logout</Link>
+                                <Link className="nav-link"><FaUserCircle className="fs-5 mx-2" />{loggedInUser.name}</Link>
+                                <Link onClick={handleLogout} to="/" className="btn btn-secondary btn-round">Logout</Link>
                             </> :
-                            <Link to="/login" className="btn btn-danger">Login</Link>
+                            <Link to="/login" className="btn btn-secondary btn-round">Login</Link>
                         }
                     </div>
                 </div>

@@ -13,7 +13,7 @@ const Vehicle = ({ vehicle }) => {
     }
     return (
         <div className="col">
-            <div onClick={() => handleOnClick(vehicleType)} className="card">
+            <div onClick={() => handleOnClick(vehicleType)} className="card vehicle-card">
                 <img src={img} className="card-img-top" alt="vehicle" />
                 <h5 className="card-title text-center">{vehicleType.toUpperCase()}</h5>
             </div>

@@ -3,7 +3,7 @@
   cursor: pointer;
 }
 .vehicle-card:hover {
-  box-shadow: -5px 0px 20px #3999c2, 5px 0px 20px #3999c2,
-    0px -5px 20px #3999c2, 0px 5px 20px #3999c2;
+  box-shadow: -5px 0px 20px #3999c2, 5px 0px 20px #3999c2, 0px -5px 20px #3999c2,
+    0px 5px 20px #3999c2;
   transform: scale(1.1);
 }

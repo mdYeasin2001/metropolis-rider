@@ -1,18 +1,22 @@
-[{
+[
+  {
     "id": 1,
     "vehicleType": "Bike",
     "img": "https://cdn5.vectorstock.com/i/thumb-large/58/44/modern-red-motorcycle-motor-vehicle-transport-vector-31775844.jpg"
-  }, {
+  },
+  {
     "id": 2,
     "vehicleType": "Car",
     "img": "https://cdn1.vectorstock.com/i/thumb-large/90/15/a-red-sports-car-vector-21069015.jpg"
-  }, {
+  },
+  {
     "id": 3,
     "vehicleType": "Bus",
     "img": "https://cdn4.vectorstock.com/i/thumb-large/56/63/city-bus-vector-4845663.jpg"
-  }, {
+  },
+  {
     "id": 4,
     "vehicleType": "Train",
     "img": "https://cdn2.vectorstock.com/i/thumb-large/82/16/speed-modern-high-speed-railway-train-locomotive-vector-19858216.jpg"
-  }]
-  
+  }
+]
